@@ -42,7 +42,46 @@ export class RNSignalR {
             this.hubConnection.on(methodName, resolve)
         });
     }
+
+    /** Invokes a hub method on the server using the specified name and arguments. Does not wait for a response from the receiver.
+     *
+     * The Promise returned by this method resolves when the client has sent the invocation to the server. The server may still
+     * be processing the invocation.
+     *
+     * @param {string} methodName The name of the server method to invoke.
+     * @param {any[]} args The arguments used to invoke the server method.
+     * @returns {Promise<void>} A Promise that resolves when the invocation has been successfully sent, or rejects with an error.
+     */
+    public send = (methodName: string, ...args: any[]): Promise<void> => {
+        return this.hubConnection.send(methodName, args)
+    }
+
+    /** Invokes a hub method on the server using the specified name and arguments.
+     *
+     * The Promise returned by this method resolves when the server indicates it has finished invoking the method. When the promise
+     * resolves, the server has finished invoking the method. If the server method returns a result, it is produced as the result of
+     * resolving the Promise.
+     *
+     * @typeparam T The expected return type.
+     * @param {string} methodName The name of the server method to invoke.
+     * @param {any[]} args The arguments used to invoke the server method.
+     * @returns {Promise<T>} A Promise that resolves with the result of the server method (if any), or rejects with an error.
+     */
+    public invoke<T = any> (methodName: string, ...args: any[]): Promise<T>  {
+        return this.hubConnection.invoke(methodName, args);
+    }
+
+    /** Removes all handlers for the specified hub method.
+     *
+     * @param {string} methodName The name of the method to remove handlers for.
+     */
+    public off (methodName:string) {
+        return new Promise((resolve, reject) => {
+            this.hubConnection.off(methodName, resolve)
+        })
+    }
 }
 
 var v = new RNSignalR("av");
+
 
