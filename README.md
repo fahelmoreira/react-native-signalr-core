@@ -36,7 +36,7 @@
 
 ## Usage
 ```javascript
-import RNReactNativeSignalrCore from 'react-native-react-native-signalr-core';
+import RNReactNativeSignalrCore from 'react-native-signalr-core';
 
 // TODO: What to do with the module?
 RNReactNativeSignalrCore;
